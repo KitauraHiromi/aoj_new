@@ -9,16 +9,16 @@ typedef vector<double> VecD;
 #define PB push_back
 
 class Point{
-friend const double operator*(Point &, Point &);
-friend const Point operator*(double, Point &);
-friend const Point operator*(Point &, double);
-friend const Point operator+(Point &, Point &);
-friend const Point operator+(double, Point &);
-friend const Point operator+(Point &, double);
-friend const Point operator-(Point &);
-friend const Point operator-(Point &, Point &);
-friend const Point operator-(double, Point &);
-friend const Point operator-(Point &, double);
+friend const double operator*(const Point &, const Point &);
+friend const Point operator*(const double, const Point &);
+friend const Point operator*(const Point &, const double);
+friend const Point operator+(const Point &, const Point &);
+friend const Point operator+(const double, const Point &);
+friend const Point operator+(const Point &, const double);
+friend const Point operator-(const Point &);
+friend const Point operator-(const Point &, const Point &);
+friend const Point operator-(const double, const Point &);
+friend const Point operator-(const Point &, const double);
 
 public:
 	Point(){};
@@ -28,46 +28,39 @@ public:
 	VecD point;
 };
 
-const double operator*(Point &p0, Point &p1){ return inner_product( p0.point.begin(), p1.point.begin(), p0.point.end(), 0); }
-const Point operator*(double a, Point &p1){
+const double operator*(const Point &p0, const Point &p1){ return inner_product( p0.point.begin(), p1.point.begin(), p0.point.end(), 0); }
+const Point operator*(const double a, const Point &p1){
 	VecD v;
-	Point p(v);
-	for(VecD::iterator iter1=p1.point.begin();iter1!=p1.point.end();iter1++) v.PB(*iter1 * a);
-	return p; 
+	for(VecD::const_iterator iter1=p1.point.begin();iter1!=p1.point.end();iter1++) v.PB(*iter1 * a);
+	const Point p(v);
+	return p;
 }
-//const Point operator* (Point &p, double a){return a*p;}
-const Point operator+(Point &p0, Point &p1){
+const Point operator* (const Point &p, const double a){return a*p;}
+const Point operator+(const Point &p0, const Point &p1){
 	VecD v;
-	Point p(v);
-	VecD::iterator iter0 = p0.point.begin();
-	for(VecD::iterator iter1=p1.point.begin();iter1!=p1.point.end();iter1++){
+	VecD::const_iterator iter0 = p0.point.begin();
+	for(VecD::const_iterator iter1=p1.point.begin();iter1!=p1.point.end();iter1++){
 		v.PB(*iter0 + *iter1);
 		iter0++;
 	}
+	const Point p(v);
 	return p;
 }
-const Point operator+(double a, Point &p1){
+const Point operator+(const double a, const Point &p1){
 	VecD v;
-	Point p(v);
-	for(VecD::iterator iter1=p1.point.begin();iter1!=p1.point.end();iter1++){
+	for(VecD::const_iterator iter1=p1.point.begin();iter1!=p1.point.end();iter1++){
 		v.PB(*iter1 + a);
 	}
+	const Point p(v);
 	return p;
 }
-//const Point operator+(Point &p1, double a){return a+p1;}
-const Point operator-(Point &p1){
-	VecD v;
-	Point p(v);
-	for(VecD::iterator iter1=p1.point.begin();iter1!=p1.point.end();iter1++) v.PB(*iter1 * (-1));
-	return p; 
-}
-//const Point operator-(Point &p0, Point &p1){ return p0+(-p1); }
-//const Point operator-(double a, Point &p1){ return a+(-p1); }
-//const Point operator-(Point &p1, double a){return (-a)+p1;}
+const Point operator+(const Point &p1, const double a){return a+p1;}
+const Point operator-(const Point &p1){return (-1)*p1;}
+const Point operator-(Point &p0, Point &p1){ return p0+(-p1); }
+const Point operator-(double a, Point &p1){ return a+(-p1); }
+const Point operator-(Point &p1, double a){return (-a)+p1;}
 
-
-
-const Point projection(Point v1, Point v2){
+const Point projection(const Point v1, const Point v2){
 	return (v1*v2) / (v1*v1) * v1;
 }
 
@@ -77,7 +70,6 @@ int main(void){
 	Point p0(v0);
 	Point p1(v1);
 	Point p = p0+p1;
-	double a = 1;
 	cout << p.point[0] << endl;
 /*
 	double xp0, yp0, xp1, yp1; cin>>xp0>>yp0>>xp1>>yp1;
