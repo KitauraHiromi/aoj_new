@@ -72,12 +72,14 @@ int main(void){
 	int q; cin >> q;
 	VecD v0; v0.PB(xp0); v0.PB(yp0); Point p0(v0);
 	VecD v1; v1.PB(xp1); v1.PB(yp1); Point p1(v1);
-	p1 = p1+p0;
-	cout << p1.point[0] << " " << p1.point[1] << endl;
+	p1 = p1-p0;
+	// cout << p1.point[0] << " " << p1.point[1] << endl;
 	rep(q){
 		double xp2,yp2; cin>>xp2>>yp2;
 		VecD v2; v2.PB(xp2); v2.PB(yp2); Point p2(v2);
+		p2 = p2-p0;
 		Point ret = projection(p1, p2);
+		ret = ret+p0;
 		cout << fixed << setprecision(10) << ret.point[0] << " " << fixed << setprecision(10) << ret.point[1] << endl;
 	}
 }
