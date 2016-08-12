@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <iomanip>
 #include "point.hpp"
 using namespace std;
 
@@ -19,6 +18,6 @@ int main(void){
 		p2 = p2-p0;
 		Point ret = projection(p1, p2);
 		ret = ret+p0;
-		cout << fixed << setprecision(10) << ret.point[0] << " " << fixed << setprecision(10) << ret.point[1] << endl;
+		cout << ret << endl;
 	}
 }
