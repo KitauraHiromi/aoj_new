@@ -8,8 +8,8 @@
 #endif
 
 class VecD;
-class Vec3D;
-class Vec2D;
+// class Vec3D;
+// class Vec2D;
 // void send(FILE* f, char* p, int n);
 // void send(std::ostream* f, char* p, int n);
 const VecD projection(const VecD &p1, const VecD &p2);
@@ -36,33 +36,25 @@ public:
 	std::vector<double> vec;
 };
 
-class Vec3D: public VecD{
-	public:
-		double vec3[3];
-		Vec3D(){
-			if(vec.size()==3){
-				for(int i=0; i<3; i++);
-					vec3[i] = vec[i];
-			}else{
-				print("size error\n");
-			}
-	}
-	friend const Vec3D cross(const Vec3D, const Vec3D);
-};
+// class Vec3D: public VecD{
+// public:
+// 	Vec3D(){};
+// 	Vec3D(std::vector<double> v){
+// 		vec = v;
+// 	}
+// 	std::vector<double> vec;
+// };
 
-class Vec2D: public VecD{
-	public:
-		double vec2[2];
-		Vec2D(){
-			if(vec.size()==2){
-				for(int i=0; i<2; i++);
-					vec2[i] = vec[i];
-			}else{
-				print("size error\n");
-			}
-	}
-	friend const Vec2D cross(const Vec2D, const Vec2D);
-};
+// class Vec2D: public VecD{
+// 	public:
+// 		Vec2D(std::vector<double> v){
+// 			VecD(v);
+// 			if(vec.size()!=2){
+// 				std::cout << "size error" << std::endl;
+// 			}
+// 		}
+// 	friend const Vec2D cross(const Vec2D, const Vec2D);
+// };
 
 const double operator*(const VecD &p0, const VecD &p1){ return inner_product( p0.vec.begin(), p0.vec.end(), p1.vec.begin(), 0); }
 template <class T>
