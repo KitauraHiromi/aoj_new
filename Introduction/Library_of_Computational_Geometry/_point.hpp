@@ -3,13 +3,17 @@
 #include <vector>
 #include <numeric>
 #include <iomanip>
+// #include <stdlib.h>
 #define rep(n) for(int i=0;i<n;i++)
 #define PB push_back
 #define VecND VecD<std::vector<double> >
-#define Vec3D VecD<(&array)[3]>
-#define Vec2D VecD<(&array)[2]>
+// #define Vec3D VecD<double (&) [3]>
+// #define Vec2D VecD<double (&) [2]>
 #endif
 
+// void initialize(double &v){
+// 	for(int i=0; i<sizeof(v); i++) v[i] = 0;
+// }
 
 template <typename U>
 class VecD;
@@ -34,7 +38,8 @@ template <typename T, class C> friend const C operator-(const C&, const T&);
 
 public:
 	VecD(){};
-	VecD(U v){
+	VecD(U& v){
+		// vec = (U)malloc(sizeof(U));
 		vec = v;
 	}
 	U vec;
@@ -45,58 +50,71 @@ const double operator*(const VecD<std::vector<double> > &p0, const VecD<std::vec
 // const double operator*(const VecD<U> &p0, const VecD<U> &p1){ return inner_product( p0.vec.begin(), p0.vec.end(), p1.vec.begin(), 0); }
 
 template <typename T>
-const VecD<std::vector<double> > operator*(const T &a, const VecD<std::vector<double> > &p1){
+const VecND operator*(const T &a, const VecND &p1){
 	std::vector<double> v;
 	for(std::vector<double>::const_iterator iter1=p1.vec.begin();iter1!=p1.vec.end();iter1++) v.PB(*iter1 * a);
-	const VecD<std::vector<double> > p(v);
+	const VecND p(v);
 	return p;
 }
-// template <typename T, typename U>
-// const VecD<U> operator*(const T &a, const VecD<U> &p1){
-// 	std::vector<double> v;
-// 	for(std::vector<double>::const_iterator iter1=p1.vec.begin();iter1!=p1.vec.end();iter1++) v.PB(*iter1 * a);
-// 	const VecD<U> p(v);
+// template <typename T>
+// const Vec2D operator*(const T &a, const Vec2D &p1){
+// 	double v[2] = {0, 0};
+// 	for(int i=0; i<2; i++) v[i] = p1.vec[i] * a;
+// 	const Vec2D p(v);
+// 	return p;
+// }
+// template <typename T>
+// const Vec3D operator*(const T &a, const Vec3D &p1){
+// 	double v[3] = {0, 0, 0};
+// 	for(int i=0; i<3; i++) v[i] = p1.vec[i] * a;
+// 	const Vec3D p(v);
 // 	return p;
 // }
 template <typename T, class C>
 const C operator* (const C &p, const T &a){return a*p;}
-const VecD<std::vector<double> > operator+(const VecD<std::vector<double> > &p0, const VecD<std::vector<double> > &p1){
+const VecND operator+(const VecND &p0, const VecND &p1){
 	std::vector<double> v;
 	std::vector<double>::const_iterator iter0 = p0.vec.begin();
 	for(std::vector<double>::const_iterator iter1=p1.vec.begin();iter1!=p1.vec.end();iter1++){
 		v.PB(*iter0 + *iter1);
 		iter0++;
 	}
-	const VecD<std::vector<double> > p(v);
+	const VecND p(v);
 	return p;
 }
-// template <typename U>
-// const VecD<U> operator+(const VecD<U> &p0, const VecD<U> &p1){
-// 	std::vector<double> v;
-// 	std::vector<double>::const_iterator iter0 = p0.vec.begin();
-// 	for(std::vector<double>::const_iterator iter1=p1.vec.begin();iter1!=p1.vec.end();iter1++){
-// 		v.PB(*iter0 + *iter1);
-// 		iter0++;
-// 	}
-// 	const VecD<U> p(v);
+// const Vec2D operator+(const Vec2D &p0, const Vec2D &p1){
+// 	double v[2] = {0, 0};
+// 	for(int i=0; i<2; i++) v[i] = p0.vec[i] + p1.vec[i];
+// 	const Vec2D p(v);
+// 	return p;
+// }
+// const Vec3D operator+(const Vec3D &p0, const Vec3D &p1){
+// 	double v[3] = {0, 0, 0};
+// 	for(int i=0; i<3; i++) v[i] = p0.vec[i] + p1.vec[i];
+// 	const Vec3D p(v);
 // 	return p;
 // }
 template <class T>
-const VecD<std::vector<double> > operator+(const T &a, const VecD<std::vector<double> > &p1){
+const VecND operator+(const T &a, const VecND &p1){
 	std::vector<double> v;
 	for(std::vector<double>::const_iterator iter1=p1.vec.begin();iter1!=p1.vec.end();iter1++){
 		v.PB(*iter1 + a);
 	}
-	const VecD<std::vector<double> > p(v);
+	const VecND p(v);
 	return p;
 }
-// template <typename U, class T>
-// const VecD<U> operator+(const T &a, const VecD<U> &p1){
-// 	std::vector<double> v;
-// 	for(std::vector<double>::const_iterator iter1=p1.vec.begin();iter1!=p1.vec.end();iter1++){
-// 		v.PB(*iter1 + a);
-// 	}
-// 	const VecD<U> p(v);
+// template <class T>
+// const Vec2D operator+(const T &a, const Vec2D &p1){
+// 	double v[2];
+// 	for(int i=0; i<2; i++) v[i] = p1.vec[i] + a;
+// 	const Vec2D p(v);
+// 	return p;
+// }
+// template <class T>
+// const Vec3D operator+(const T &a, const Vec3D &p1){
+// 	double v[3];
+// 	for(int i=0; i<3; i++) v[i] = p1.vec[i] + a;
+// 	const Vec3D p(v);
 // 	return p;
 // }
 template <typename T, class C>
