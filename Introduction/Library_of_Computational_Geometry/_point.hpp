@@ -9,17 +9,12 @@
 #define rep(n) for(int i=0;i<n;i++)
 #define PB push_back
 #define VecND VecD<std::vector<double> >
-#if TEST_MODE
 #define Vec3D _VecD<double, 3>
 #define Vec2D _VecD<double, 2>
 #endif
-#endif
 
 template <typename U>                       class VecD;
-
-#if TEST_MODE
 template <typename TYPE, unsigned int SIZE> class _VecD;
-#endif
 
 template <typename U> const VecD<U> projection(const VecD<U> &p1, const VecD<U> &p2);
 
@@ -46,7 +41,6 @@ public:
 	}
 };
 
-#if TEST_MODE
 template <typename TYPE, unsigned int SIZE> class _VecD{
 template <typename DUMMY>      friend const double operator*(const _VecD&, const _VecD&);
 template <typename T>          friend const _VecD operator*(const T&, const _VecD&);
@@ -82,7 +76,6 @@ public:
 		return Vec3D(v);
 	}
 };
-#endif
 
 const double operator*(const VecND &p0, const VecND &p1){ return inner_product( p0.vec.begin(), p0.vec.end(), p1.vec.begin(), 0); }
 // template <typename U>
@@ -95,7 +88,6 @@ const VecND operator*(const T &a, const VecND &p1){
 	const VecND p(v);
 	return p;
 }
-#if TEST_MODE
 template <typename T>
 const Vec2D operator*(const T &a, const Vec2D &p1){
 	double v[2];
@@ -110,7 +102,6 @@ const Vec3D operator*(const T &a, const Vec3D &p1){
 	const Vec3D p(v);
 	return p;
 }
-#endif
 
 template <typename T, class C>
 const C operator* (const C &p, const T &a){return a*p;}
@@ -124,7 +115,6 @@ const VecND operator+(const VecND &p0, const VecND &p1){
 	const VecND p(v);
 	return p;
 }
-#if TEST_MODE
 const Vec2D operator+(const Vec2D &p0, const Vec2D &p1){
 	double v[2];
 	for(int i=0; i<2; i++) v[i] = p0.vec[i] + p1.vec[i];
@@ -137,7 +127,6 @@ const Vec3D operator+(const Vec3D &p0, const Vec3D &p1){
 	const Vec3D p(v);
 	return p;
 }
-#endif
 template <class T>
 const VecND operator+(const T &a, const VecND &p1){
 	std::vector<double> v;
@@ -147,7 +136,6 @@ const VecND operator+(const T &a, const VecND &p1){
 	const VecND p(v);
 	return p;
 }
-#if TEST_MODE
 template <class T>
 const Vec2D operator+(const T &a, const Vec2D &p1){
 	double v[2];
@@ -162,7 +150,6 @@ const Vec3D operator+(const T &a, const Vec3D &p1){
 	const Vec3D p(v);
 	return p;
 }
-#endif
 template <typename T, class C>
 const C operator+(const C &p1, const T &a){return a+p1;}
 template <class C>
@@ -183,23 +170,19 @@ const VecD<U> projection(const VecD<U> &p1, const VecD<U> &p2){
 	return ((p1.dot(p2)) / (p1.dot(p1))) * p1;
 }
 
-#if TEST_MODE
 const Vec2D projection(const Vec2D &p1, const Vec2D &p2){
 	return ((p1.dot(p2)) / (p1.dot(p1))) * p1;
 }
 const Vec3D projection(const Vec3D &p1, const Vec3D &p2){
 	return ((p1.dot(p2)) / (p1.dot(p1))) * p1;
 }
-#endif
 
 std::ostream& operator<<(std::ostream &os, const VecND &p){
 	os << std::fixed << std::setprecision(10) << p.vec[0] << " " << std::fixed << std::setprecision(10) << p.vec[1] << std::endl;
 }
-#if TEST_MODE
 std::ostream& operator<<(std::ostream &os, const Vec2D &p){
 	os << std::fixed << std::setprecision(10) << p.vec[0] << " " << std::fixed << std::setprecision(10) << p.vec[1] << std::endl;
 }
 std::ostream& operator<<(std::ostream &os, const Vec3D &p){
 	os << std::fixed << std::setprecision(10) << p.vec[0] << " " << std::fixed << std::setprecision(10) << p.vec[1] << std::endl;
 }
-#endif
