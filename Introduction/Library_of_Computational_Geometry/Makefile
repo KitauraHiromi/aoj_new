@@ -13,5 +13,8 @@ conter_clockwise: counter_clockwise.cpp
 conter_clockwise_submit: counter_clockwise_submit.cpp
 	g++ -o $@ $<
 
+intersection: intersection.cpp
+	g++ -o $@ $<
+
 test: test.cpp
 	g++ -o $@ $<
