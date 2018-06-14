@@ -1,5 +1,5 @@
 /*
- * Contents   : AOJ DPL 1 D 
+ * Contents   : AOJ DPL 1 D AC
  * Author     : KitauraHiromi
  * LastUpdate : 20180613
  * Since      : 20180613
@@ -9,19 +9,16 @@
 #include <cstring>
 using namespace std;
 int N;
+int INF = 1e9 + 1;
 int dp[100001]; // dp[i]: i番目までの文字を見たときのLIS
-long long a[100001];
+int a[100001];
 int main(void){
     cin >> N;
-    int res = 0;
-    for(int i=0; i<N; ++i) dp[i] = 1;
     for(int i=0; i<N; ++i) cin >> a[i];
+    fill(dp, dp+N, INF);
     for(int i=0; i<N; ++i){
-        for(int j=0; j<i; ++j){
-            if(a[j] < a[i]) dp[i] = max(dp[j] + 1, dp[i]);
-        }
-        res = max(res, dp[i]);
+        *lower_bound(dp, dp+N, a[i]) = a[i];
     }
-    cout << res << endl;
+    cout << lower_bound(dp, dp+N, INF) - dp << endl;
     return 0;
 }
