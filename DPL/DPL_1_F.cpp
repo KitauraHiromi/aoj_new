@@ -1,29 +1,28 @@
 /*
- * Contents   : (プロジェクト全体の役割)
- *              (モジュールの役割) (ファイル名)
- * Author     : (製作者の名前) (製作者の所属)
- * LastUpdate : (更新日YYYY/MM/DD)
- * Since      : (作成日YYYY/MM/DD)
+ * Contents   : AOJ DPL 1 F
+ * Author     : KitauraHiromi
+ * LastUpdate : 20180618
+ * Since      : 20180618
  */
+#define INF 1000000001
 #include <iostream>
+#include <algorithm>
 using namespace std;
-int value[101], weight[101];
-int dp[101]; // i個目までの荷物を選択肢に入れたときの最大価値
-int w[101]; // i個目までの荷物を選択肢に入れたときに最大価値になる場合の重さ
 int N, W;
+int dp[101][101*101]; // dp[i][v]: i個目までの荷物を価値vまで入れたときの最小重さ
+int value[101], weight[101];
 int main(void){
-    fill(value, value+101, 0);
-    fill(weight, weight+101, 0);
     cin >> N >> W;
+    fill((int*)dp, (int*)(dp+101), INF);
+    dp[0][0] = 0;
+    for(int i=0; i<N; ++i) cin >> value[i] >> weight[i];
     for(int i=0; i<N; ++i){
-        cin >> value[i];
-        cin >> weight[i];
-    }
-
-    for(int i=0; i<N; ++i){
-        for(int j=0; j<N; ++j){
-            if(dp[j]+value[i])
-            dp[i+1] = max(dp[j]+value[i], dp[i+1]);
+        for(int v=0; v<101*101; ++v){
+            (v >= value[i]) ? dp[i+1][v] = min(dp[i][v], dp[i][v-value[i]] + weight[i]) : dp[i+1][v] = dp[i][v];
         }
     }
+    // dp[N][i]がWを超えない最大のiが答え
+    int res = 0;
+    for(int i=0; i<101*101; ++i) if(dp[N][i] <= W) res = i;
+    cout << res << endl;
 }
