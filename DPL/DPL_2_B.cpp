@@ -1,8 +1,8 @@
 /*
- * Contents   : DPL 2 A AC
+ * Contents   : DPL 2 B
  * Author     : Kitaura Hiromi
- * LastUpdate : 20180626
- * Since      : 20180626
+ * LastUpdate : 20180701
+ * Since      : 20180701
  */
 #include <bits/stdc++.h>
 using namespace std;
@@ -17,9 +17,10 @@ int main(void){
     fill((int*)dp, (int*)(dp+(1<<MAX_N)), INF);
     fill((int*)d, (int*)(d+MAX_N), INF);
     for(int e=0; e<E; e++){
-        int i, j;
+        int i, j, tmp;
         cin >> i >> j;
-        cin >> d[i][j];
+        cin >> tmp;
+        d[i][j] = d[j][i] = min(d[i][j], tmp);
     }
     dp[(1<<n) - 1][0] = 0;
 
